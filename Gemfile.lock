@@ -96,6 +96,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rspec-rails
+  rspec-rails (~> 2.0)
   sqlite3
   subscriptions!

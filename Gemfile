@@ -14,7 +14,7 @@ gemspec
 # gem 'debugger'
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.0'
 end
 
 
