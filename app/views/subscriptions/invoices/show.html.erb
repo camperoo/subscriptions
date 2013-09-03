@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Invoice start date:</strong>
+  <%= @invoice.invoice_start_date %>
+</p>
+
+<p>
+  <strong>Invoice end date:</strong>
+  <%= @invoice.invoice_end_date %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @invoice.customer %>
+</p>
+
+<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%= link_to 'Back', invoices_path %>

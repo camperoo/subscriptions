@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130903190921) do
+ActiveRecord::Schema.define(version: 20130903231446) do
 
   create_table "subscriptions_customers", force: true do |t|
     t.string   "email"
@@ -27,6 +27,44 @@ ActiveRecord::Schema.define(version: 20130903190921) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "subscriptions_invoices", force: true do |t|
+    t.date     "invoice_start_date"
+    t.date     "invoice_end_date"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions_invoices", ["customer_id"], name: "index_subscriptions_invoices_on_customer_id"
+
+  create_table "subscriptions_line_items", force: true do |t|
+    t.string   "description"
+    t.decimal  "amount"
+    t.date     "date_added"
+    t.integer  "invoice_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions_line_items", ["invoice_id"], name: "index_subscriptions_line_items_on_invoice_id"
+
+  create_table "subscriptions_payments", force: true do |t|
+    t.integer  "customer_id"
+    t.integer  "invoice_id"
+    t.integer  "card_id"
+    t.decimal  "amount"
+    t.decimal  "fee"
+    t.date     "date"
+    t.string   "status"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions_payments", ["card_id"], name: "index_subscriptions_payments_on_card_id"
+  add_index "subscriptions_payments", ["customer_id"], name: "index_subscriptions_payments_on_customer_id"
+  add_index "subscriptions_payments", ["invoice_id"], name: "index_subscriptions_payments_on_invoice_id"
 
   create_table "subscriptions_plans", force: true do |t|
     t.string   "name"
