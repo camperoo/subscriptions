@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @plan.name %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @plan.amount %>
+</p>
+
+<p>
+  <strong>Interval quantity:</strong>
+  <%= @plan.interval_quantity %>
+</p>
+
+<p>
+  <strong>Interval units:</strong>
+  <%= @plan.interval_units %>
+</p>
+
+<p>
+  <strong>Trial period days:</strong>
+  <%= @plan.trial_period_days %>
+</p>
+
+<p>
+  <strong>Assigned:</strong>
+  <%= @plan.assigned_id %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= @plan.group %>
+</p>
+
+<%= link_to 'Edit', edit_plan_path(@plan) %> |
+<%= link_to 'Back', plans_path %>
