@@ -43,6 +43,7 @@ GEM
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.0.9)
+    database_cleaner (1.1.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     factory_girl (4.2.0)
@@ -130,6 +131,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (~> 2.1)
+  database_cleaner
   factory_girl_rails (~> 4.2.1)
   pry
   rspec-rails (~> 2.0)
