@@ -8,37 +8,27 @@ end
 describe Subscriptions::Extensions::InvoiceExtensions do
 
   let(:billing_service) { double() }
-
-  let(:pending_due_today_invoice) {
-    f_invoice = FakeInvoice.new
-    f_invoice.invoice_end_date = Date.today
-    f_invoice.state= :pending
-    f_invoice.credit_card = credit_card
-    f_invoice.amount = amount
-    f_invoice.payments = []
-    f_invoice
-  }
-
-  let(:pending_due_tomorrow_invoice) {
-    f_invoice = FakeInvoice.new
-    f_invoice.invoice_end_date = Date.today + 1
-    f_invoice.state= :pending
-    f_invoice.credit_card = credit_card
-    f_invoice.amount = amount
-    f_invoice.payments = []
-    f_invoice
-  }
-
   let(:credit_card) { double() }
-  let(:amount) { 12345 }
   let(:payment) { double() }
+  let(:amount) { 12345 }
 
+  let(:pending_invoice) {
+    f_invoice = FakeInvoice.new
+    f_invoice.invoice_end_date = invoice_end_date
+    f_invoice.state= :pending
+    f_invoice.credit_card = credit_card
+    f_invoice.amount = amount
+    f_invoice.payments = []
+    f_invoice
+  }
 
-  context "when due date in the future" do
-    subject {
-      Subscriptions::Extensions::InvoiceExtensions.new(pending_due_tomorrow_invoice)
-    }
-    describe ".collect_if_due" do
+  subject {
+    Subscriptions::Extensions::InvoiceExtensions.new(pending_invoice)
+  }
+
+  describe ".collect_if_due" do
+    context "when due date in the future" do
+      let(:invoice_end_date) { Date.today + 1 }
       before {
           subject.collect_if_due billing_service
       }
@@ -50,15 +40,9 @@ describe Subscriptions::Extensions::InvoiceExtensions do
       end
     end
 
-  end
+    context "when due date is today" do
+      let(:invoice_end_date) { Date.today }
 
-  context "when due date is today" do
-
-    subject {
-      Subscriptions::Extensions::InvoiceExtensions.new(pending_due_today_invoice)
-    }
-
-    describe ".collect_if_due" do
       before {
         payment.should_receive(:is_successful?) { payment_status }
         billing_service.should_receive(:authorize_and_capture)
@@ -85,15 +69,12 @@ describe Subscriptions::Extensions::InvoiceExtensions do
           subject.payments.size.should eq(1)
         end
       end
-
     end
   end
 
-  describe ".add_payment" do
 
-    subject {
-      Subscriptions::Extensions::InvoiceExtensions.new(pending_due_today_invoice)
-    }
+  describe ".add_payment" do
+    let(:invoice_end_date) { Date.today }
 
     context "successful payment" do
       before {
