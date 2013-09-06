@@ -15,6 +15,8 @@ gemspec
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'jazz_hands'
+  gem 'better_errors'
 end
 
 group :test do

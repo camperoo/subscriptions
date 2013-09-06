@@ -17,7 +17,7 @@ describe Invoice do
   let(:billing_service) { double() }
 
   context "when due date in the future" do
-    
+
     describe ".collect_if_due" do
       it "shouldn't collect money or change state" do
         subject.should_receive(:invoice_end_date) { Date.today + 1 }
