@@ -7,21 +7,46 @@ end
 
 describe Subscriptions::Extensions::InvoiceExtensions do
 
-  let(:fake_invoice) { double() }
   let(:billing_service) { double() }
 
-  subject {
-    Subscriptions::Extensions::InvoiceExtensions.new(fake_invoice)
+  let(:pending_due_today_invoice) {
+    f_invoice = FakeInvoice.new
+    f_invoice.invoice_end_date = Date.today
+    f_invoice.state= :pending
+    f_invoice.credit_card = credit_card
+    f_invoice.amount = amount
+    f_invoice.payments = []
+    f_invoice
   }
 
-  context "when due date in the future" do
-    describe ".collect_if_due" do
-      it "shouldn't collect money or change state" do
-        fake_invoice.should_receive(:invoice_end_date) { Date.today + 1 }
-        fake_invoice.should_receive(:state) { :pending }
+  let(:pending_due_tomorrow_invoice) {
+    f_invoice = FakeInvoice.new
+    f_invoice.invoice_end_date = Date.today + 1
+    f_invoice.state= :pending
+    f_invoice.credit_card = credit_card
+    f_invoice.amount = amount
+    f_invoice.payments = []
+    f_invoice
+  }
 
-        subject.collect_if_due billing_service
+  let(:credit_card) { double() }
+  let(:amount) { 12345 }
+  let(:payment) { double() }
+
+
+  context "when due date in the future" do
+    subject {
+      Subscriptions::Extensions::InvoiceExtensions.new(pending_due_tomorrow_invoice)
+    }
+    describe ".collect_if_due" do
+      before {
+          subject.collect_if_due billing_service
+      }
+      it "payment state shouldn't change from pending" do
         subject.state.should eq(:pending)
+      end
+      it "number of payments shouldn't change" do
+        subject.payments.size.should eq(0)
       end
     end
 
@@ -29,68 +54,46 @@ describe Subscriptions::Extensions::InvoiceExtensions do
 
   context "when due date is today" do
 
-
-    let(:credit_card) { double() }
-    let(:amount) { 12345 }
-    let(:payment) { double() }
-
     subject {
-      f_invoice = FakeInvoice.new
-
-      f_invoice.invoice_end_date = Date.today
-      f_invoice.state= :pending
-      f_invoice.credit_card = credit_card
-      f_invoice.amount = amount
-      f_invoice.payments = []
-
-      Subscriptions::Extensions::InvoiceExtensions.new(f_invoice)
+      Subscriptions::Extensions::InvoiceExtensions.new(pending_due_today_invoice)
     }
 
     describe ".collect_if_due" do
-      it "should collect money and change state to complete when successful" do
-
-        payment.should_receive(:is_successful?) { true }
-
+      before {
+        payment.should_receive(:is_successful?) { payment_status }
         billing_service.should_receive(:authorize_and_capture)
           .with(credit_card, amount) { payment }
-
         subject.collect_if_due billing_service
-        subject.state.should eq(:complete)
-        subject.payments.size.should eq(1)
+      }
+
+      context "when payment successful" do
+        let(:payment_status) { true }
+        it "state should change complete" do
+          subject.state.should eq(:complete)
+        end
+        it "payment should be added to invoice" do
+          subject.payments.size.should eq(1)
+        end
       end
 
-      it "should not collect money or change state when unsuccessful" do
-        subject.should_receive(:invoice_end_date) { Date.today }
-        subject.should_receive(:credit_card) { credit_card }
-        subject.should_receive(:amount) { amount }
-        payment.should_receive(:is_successful?) { false }
-
-        billing_service.should_receive(:authorize_and_capture)
-          .with(credit_card, amount) { payment }
-
-        subject.state.should eq(:pending)
-        subject.collect_if_due billing_service
+      context "when payment unsuccessful" do
+        let(:payment_status) { false }
+        it "state should remain as pending" do
+          subject.state.should eq(:pending)
+        end
+        it "payment should be added to invoice" do
+          subject.payments.size.should eq(1)
+        end
       end
+
     end
   end
 
   describe ".add_payment" do
-    let (:payment) { double() }
-    let(:credit_card) { double() }
-    let(:amount) { 12345 }
 
     subject {
-      f_invoice = FakeInvoice.new
-
-      f_invoice.invoice_end_date = Date.today
-      f_invoice.state= :pending
-      f_invoice.credit_card = credit_card
-      f_invoice.amount = amount
-      f_invoice.payments = []
-
-      Subscriptions::Extensions::InvoiceExtensions.new(f_invoice)
+      Subscriptions::Extensions::InvoiceExtensions.new(pending_due_today_invoice)
     }
-
 
     context "successful payment" do
       before {
