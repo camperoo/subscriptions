@@ -1,11 +1,11 @@
-require 'subscriptions/extensions/invoice_extensions'
+require 'subscriptions/services/bill_collector'
 require 'pry'
 
 class FakeInvoice
   attr_accessor :payments, :state, :credit_card, :amount, :invoice_end_date
 end
 
-describe Subscriptions::Extensions::InvoiceExtensions do
+describe Subscriptions::Services::BillCollector do
 
   let(:billing_service) { double() }
   let(:credit_card) { double() }
@@ -23,7 +23,7 @@ describe Subscriptions::Extensions::InvoiceExtensions do
   }
 
   subject {
-    Subscriptions::Extensions::InvoiceExtensions.new(pending_invoice)
+    Subscriptions::Services::BillCollector.new(pending_invoice)
   }
 
   describe ".collect_if_due" do

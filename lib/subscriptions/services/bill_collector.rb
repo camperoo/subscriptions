@@ -1,9 +1,9 @@
 module Subscriptions
-  module Extensions
-    class InvoiceExtensions
+  module Services
+    class BillCollector
       extend Forwardable
 
-      #these get forwarded to the AR invoice object.
+      #these get forwarded to the ActiveRecord invoice object.
       def_delegators :@invoice, :payments, :state, :state=, :credit_card, :amount,
                                 :invoice_end_date
 
@@ -12,21 +12,19 @@ module Subscriptions
       end
 
       def collect_if_due(billing_service)
-        if invoice_end_date == Date.today
-          payment = billing_service.authorize_and_capture(
-                                      credit_card,
-                                      amount )
+        return unless invoice_end_date == Date.today
 
-          add_payment(payment)
-        end
-
+        # TODO - The invoice won't have the credit_card, so we should get the 
+        # user from the invoice instead and get the credit_card from the
+        # user to pass in here. - Javid
+        payment = billing_service.authorize_and_capture(credit_card, amount)
+        add_payment(payment)
       end
 
       def add_payment(payment)
         if payment.is_successful?
           self.state= :complete
         end
-
         payments << payment
       end
 
