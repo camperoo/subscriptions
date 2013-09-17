@@ -13,6 +13,8 @@ gemspec
 # To use debugger
 # gem 'debugger'
 
+gem 'activemerchant'
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'jazz_hands'
