@@ -15,6 +15,7 @@ source "https://rubygems.org"
 
 gem 'subscriptions', path: File.expand_path('../../../..', __FILE__)
 gem 'devise'
+gem 'sqlite3'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'

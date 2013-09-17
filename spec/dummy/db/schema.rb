@@ -11,13 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130903231446) do
+ActiveRecord::Schema.define(version: 20130917222231) do
 
-  create_table "subscriptions_customers", force: true do |t|
-    t.string   "email"
-    t.string   "description"
-    t.decimal  "account_balance"
-    t.string   "assigned_id"
+  create_table "subscriptions_events", force: true do |t|
+    t.string   "user"
+    t.string   "action"
+    t.string   "amount"
+    t.string   "data"
+    t.string   "type"
+    t.string   "source"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
