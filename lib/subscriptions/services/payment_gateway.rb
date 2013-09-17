@@ -5,14 +5,18 @@ module Subscriptions
       MERCHANT_FEE_PERCENTAGE = 0.0275
 
       def authorize_and_capture(cim_gateway, credit_card, amount)
-        gateway_result = cim_gateway.create_customer_profile_transaction
-
-        payment_data = {}
-        payment_data[:merchant_fee_percentage] = MERCHANT_FEE_PERCENTAGE
-        payment_data[:merchant_fee] = amount * MERCHANT_FEE_PERCENTAGE
-        payment_data[:gateway_fee_percentage] = gateway_result[:gateway_fee_percentage]
-        payment_data[:gateway_fee] = amount * gateway_result[:gateway_fee_percentage]
-        payment_data
+        amount = "%.2f" % (amount / 100.0) # This gateway requires formated decimal, not cents
+        transaction = {
+          transaction:
+          {
+            type: :auth_capture,
+            amount: amount,
+            customer_profile_id: credit_card.customer_profile_id,
+            customer_payment_profile_id: credit_card.customer_payment_profile_id
+          }
+        }
+        gateway_result = cim_gateway.create_customer_profile_transaction(transaction)
+        gateway_result.params["direct_response"]
       end
 
     end

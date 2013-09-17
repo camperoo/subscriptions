@@ -22,7 +22,9 @@ group :development, :test do
 end
 
 group :test do
-  gem 'pry'
+  gem "vcr" #Records HTTP requests and replays them for tests
+  gem "webmock" #mocks out HTTP requests
+  gem 'pry' #debugging into a console
   gem 'capybara', '~> 2.1'
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'selenium-webdriver', '~> 2.35'

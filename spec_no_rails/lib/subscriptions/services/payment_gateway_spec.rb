@@ -1,5 +1,8 @@
 require 'subscriptions/services/payment_gateway.rb'
-require 'pry'
+require 'active_merchant'
+require 'spec_no_rails_helper'
+
+ActiveMerchant::Billing::Base.mode = :test
 
 describe Subscriptions::Services::PaymentGateway do
 
@@ -8,23 +11,28 @@ describe Subscriptions::Services::PaymentGateway do
     MERCHANT_FEE_PERCENTAGE = 0.0275
 
     let(:amount) { 123 }
-    let(:credit_card) { double() }
-    let(:cim_gateway) { double() }
+    let(:credit_card) { 
+      credit_card = double() 
+      credit_card.stub(:customer_profile_id) { "20851995" }
+      credit_card.stub(:customer_payment_profile_id) { "19136816" }
+      credit_card
+    }
+    let(:login) { "SOMETRANSACTIONNAME" }
+    let(:password) { "SOMETRANSACTIONKEY" }
+    let(:cim_gateway) { 
+      ActiveMerchant::Billing::AuthorizeNetCimGateway.new( login: login, password: password )
+    }
 
     it "returns a payment when successful on a non-existing user" do
-      cim_gateway
-        .should_receive(:create_customer_profile_transaction)
-        .and_return ({ gateway_fee_percentage: 0.021 })
 
-      payment_data = subject.authorize_and_capture(cim_gateway, credit_card, amount)
+      VCR.use_cassette('create_customer_profile_transaction') do
+        @payment_data = subject.authorize_and_capture(cim_gateway, credit_card, amount)
+      end
 
-      payment_data[:merchant_fee].should eq(MERCHANT_FEE_PERCENTAGE * amount)
-      payment_data[:merchant_fee_percentage].should eq(MERCHANT_FEE_PERCENTAGE)
-      payment_data[:gateway_fee].should eq(GATEWAY_FEE_PERCENTAGE * amount )
-      payment_data[:gateway_fee_percentage].should eq(GATEWAY_FEE_PERCENTAGE)
+      @payment_data["email_address"].should eq("test@test.com")
+      @payment_data["transaction_id"].should eq("2198546730")
+      @payment_data["amount"].should eq("1.23")
     end
   end
 
 end
-
-
