@@ -1,5 +1,5 @@
 PATH
-  remote: /Users/hvs/Sites
+  remote: /Users/javidjamae/Workspace
   specs:
     subscriptions (0.0.1)
       rails (~> 4.0.0)
