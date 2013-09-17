@@ -46,6 +46,7 @@ GEM
     arel (4.0.0)
     atomic (1.1.13)
     awesome_print (1.1.0)
+    bcrypt-ruby (3.1.2)
     better_errors (0.9.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -73,6 +74,12 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
+    devise (3.1.0)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.2.4)
     diffy (3.0.1)
     erubis (2.7.0)
@@ -115,6 +122,7 @@ GEM
     multi_json (1.7.9)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    orm_adapter (0.4.0)
     polyglot (0.3.3)
     posix-spawn (0.3.6)
     pry (0.9.12.2)
@@ -196,6 +204,8 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
     vcr (2.5.0)
+    warden (1.2.3)
+      rack (>= 1.0)
     webmock (1.13.0)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
@@ -212,6 +222,7 @@ DEPENDENCIES
   better_errors
   capybara (~> 2.1)
   database_cleaner (< 1.1.0)
+  devise
   factory_girl_rails (~> 4.2.1)
   jazz_hands
   pry
