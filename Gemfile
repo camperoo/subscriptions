@@ -17,6 +17,7 @@ gem 'activemerchant'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'shoulda-matchers'
   gem 'jazz_hands'
   gem 'better_errors'
 end
@@ -28,6 +29,6 @@ group :test do
   gem 'capybara', '~> 2.1'
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'selenium-webdriver', '~> 2.35'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '< 1.1.0'
 end
 

@@ -2,6 +2,7 @@
 .ruby-gemset
 .ruby-version
 .rvmrc
+*.sqlite3
 log/*.log
 pkg/
 spec/dummy/db/*.sqlite3

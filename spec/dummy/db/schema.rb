@@ -13,6 +13,17 @@
 
 ActiveRecord::Schema.define(version: 20130917224252) do
 
+  create_table "subscriptions_events", force: true do |t|
+    t.string   "user"
+    t.string   "action"
+    t.string   "amount"
+    t.string   "data"
+    t.string   "type"
+    t.string   "source"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "subscriptions_groups", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
