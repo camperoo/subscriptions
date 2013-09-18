@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Customer profile:</strong>
+  <%= @credit_card.customer_profile_id %>
+</p>
+
+<p>
+  <strong>Customer payment profile:</strong>
+  <%= @credit_card.customer_payment_profile_id %>
+</p>
+
+<%= link_to 'Edit', edit_credit_card_path(@credit_card) %> |
+<%= link_to 'Back', credit_cards_path %>

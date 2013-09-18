@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130919224252) do
+ActiveRecord::Schema.define(version: 20130919224253) do
+
+  create_table "subscriptions_credit_cards", force: true do |t|
+    t.integer  "customer_id"
+    t.string   "customer_profile_id"
+    t.string   "customer_payment_profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions_credit_cards", ["customer_id"], name: "index_subscriptions_credit_cards_on_customer_id"
 
   create_table "subscriptions_events", force: true do |t|
     t.integer  "payment_id"
