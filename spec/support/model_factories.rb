@@ -4,7 +4,8 @@ FactoryGirl.define do
     customer
     invoice
     amount 100
-    fee 2.5
+    merchant_fee 10
+    merchant_fee_percentage 0.1
     date Date.today
     status "complete"
     description "test payment"
