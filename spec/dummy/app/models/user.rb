@@ -8,5 +8,6 @@ class User < ActiveRecord::Base
   #automatically added through meta-data
   has_many :invoices, class_name: "Subscriptions::Invoice"
   has_many :payments, class_name: "Subscriptions::Payment"
+  has_one :credit_card, class_name: "Subscriptions::CreditCard"
 
 end
