@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe Subscriptions::EventLogger do
   describe "new_charge_log" do
-    let(:payment) { FactoryGirl.create(:payment) }
+    let(:customer) { FactoryGirl.create(:customer) }
+    let(:invoice) { FactoryGirl.create(:invoice, customer: customer) }
+    let(:payment) { FactoryGirl.create(:payment, invoice: invoice, customer: customer ) }
 
     it "should log a new charge with all data" do
 

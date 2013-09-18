@@ -1,24 +1,21 @@
-binding.pry
-
 FactoryGirl.define do
-  factory :payment do
+
+  factory :payment, class: Subscriptions::Payment do
     customer
     invoice
     amount 100
-    gateway_fee 2.5
-    gateway_fee_percentage 0.025
-    merchant_fee 2.5
-    merchant_fee_percentage 0.025
+    fee 2.5
     date Date.today
     status "complete"
     description "test payment"
   end
 
-  factory :customer, class: Subscription.customer_class do
-
+  factory :customer, class: User do |f|
+    f.sequence(:email) { |n| "test#{n}@test.com" }
+    password "testtest"
   end
 
-  factory :invoice do
+  factory :invoice, class: Subscriptions::Invoice do
     customer
     invoice_start_date { Date.today }
     invoice_end_date { Date.today + 1.month }
