@@ -12,7 +12,7 @@
 
 <p>
   <strong>Customer:</strong>
-  <%= @invoice.customer %>
+  <%= @invoice.customer.email %>
 </p>
 
 <%= link_to 'Edit', edit_invoice_path(@invoice) %> |

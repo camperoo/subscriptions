@@ -17,7 +17,7 @@
       <tr>
         <td><%= invoice.invoice_start_date %></td>
         <td><%= invoice.invoice_end_date %></td>
-        <td><%= invoice.customer %></td>
+        <td><%= invoice.customer.try(:email) %></td>
         <td><%= link_to 'Show', invoice %></td>
         <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
         <td><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
