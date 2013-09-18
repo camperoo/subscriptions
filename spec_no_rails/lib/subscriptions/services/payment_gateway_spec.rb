@@ -11,15 +11,15 @@ describe Subscriptions::Services::PaymentGateway do
     MERCHANT_FEE_PERCENTAGE = 0.0275
 
     let(:amount) { 123 }
-    let(:credit_card) { 
-      credit_card = double() 
+    let(:credit_card) {
+      credit_card = double()
       credit_card.stub(:customer_profile_id) { "20851995" }
       credit_card.stub(:customer_payment_profile_id) { "19136816" }
       credit_card
     }
     let(:login) { "SOMETRANSACTIONNAME" }
     let(:password) { "SOMETRANSACTIONKEY" }
-    let(:cim_gateway) { 
+    let(:cim_gateway) {
       ActiveMerchant::Billing::AuthorizeNetCimGateway.new( login: login, password: password )
     }
 

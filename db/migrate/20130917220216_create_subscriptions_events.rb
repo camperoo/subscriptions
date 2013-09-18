@@ -1,6 +1,7 @@
 class CreateSubscriptionsEvents < ActiveRecord::Migration
   def change
     create_table :subscriptions_events do |t|
+      t.references :payment
       t.string :user
       t.string :action
       t.string :amount
