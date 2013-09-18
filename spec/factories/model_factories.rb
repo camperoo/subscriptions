@@ -1,3 +1,5 @@
+binding.pry
+
 FactoryGirl.define do
   factory :payment do
     customer
@@ -13,7 +15,6 @@ FactoryGirl.define do
   end
 
   factory :customer, class: Subscription.customer_class do
-
 
   end
 
