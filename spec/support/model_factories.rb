@@ -22,4 +22,14 @@ FactoryGirl.define do
     invoice_end_date { Date.today + 1.month }
   end
 
+  factory :event, class: Subscriptions::Event do
+    payment
+    user_identifier "some@email.com"
+    action "some_action"
+    amount 100
+    data "some data"
+    event_type "some type"
+    source "some source"
+  end
+
 end

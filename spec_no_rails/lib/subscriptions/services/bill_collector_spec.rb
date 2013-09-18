@@ -9,9 +9,9 @@ describe Subscriptions::Services::BillCollector do
 
   let(:payment_gateway) { double() }
   let(:credit_card) { double() }
-  let(:user) { 
+  let(:user) {
     user = double()
-    user.stub(:credit_card) { credit_card } 
+    user.stub(:credit_card) { credit_card }
     user
   }
   let(:payment) { double() }

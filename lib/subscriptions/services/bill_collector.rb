@@ -10,7 +10,8 @@ module Subscriptions
       def collect_if_due(invoice)
         return unless invoice.invoice_end_date == Date.today
 
-        payment = @payment_gateway.authorize_and_capture(invoice.user.credit_card, invoice.amount)
+        payment = @payment_gateway.authorize_and_capture(invoice.user.credit_card,
+                                                         invoice.amount)
         add_payment(invoice, payment)
       end
 

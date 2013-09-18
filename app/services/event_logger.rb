@@ -7,14 +7,16 @@ class EventLogger
   private
 
   def self.log(payment, user, action, amount, data, type, source)
+    return nil if payment.event
+
     event = Subscriptions::Event.new
 
     event.payment = payment
-    event.user = user
+    event.user_identifier = user
     event.action = action
     event.amount = amount
     event.data = data
-    event.type = type
+    event.event_type = type
     event.source = source
 
     event.save!
