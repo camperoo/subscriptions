@@ -4,9 +4,11 @@ class CreateSubscriptionsPayments < ActiveRecord::Migration
     create_table :subscriptions_payments do |t|
       t.references :customer, index: true
       t.references :invoice, index: true
-      t.references :card, index: true
-      t.decimal :amount
-      t.decimal :fee
+      t.integer :amount
+      t.integer :gateway_fee
+      t.decimal :gateway_fee_percentage
+      t.integer :merchant_fee
+      t.decimal :merchant_fee_percentage
       t.date :date
       t.string :status
       t.string :description

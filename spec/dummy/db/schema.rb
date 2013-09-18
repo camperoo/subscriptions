@@ -11,9 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917224252) do
+ActiveRecord::Schema.define(version: 20130919224252) do
 
   create_table "subscriptions_events", force: true do |t|
+    t.integer  "payment_id"
     t.string   "user"
     t.string   "action"
     t.string   "amount"
@@ -54,9 +55,11 @@ ActiveRecord::Schema.define(version: 20130917224252) do
   create_table "subscriptions_payments", force: true do |t|
     t.integer  "customer_id"
     t.integer  "invoice_id"
-    t.integer  "card_id"
-    t.decimal  "amount"
-    t.decimal  "fee"
+    t.integer  "amount"
+    t.integer  "gateway_fee"
+    t.decimal  "gateway_fee_percentage"
+    t.integer  "merchant_fee"
+    t.decimal  "merchant_fee_percentage"
     t.date     "date"
     t.string   "status"
     t.string   "description"
@@ -64,7 +67,6 @@ ActiveRecord::Schema.define(version: 20130917224252) do
     t.datetime "updated_at"
   end
 
-  add_index "subscriptions_payments", ["card_id"], name: "index_subscriptions_payments_on_card_id"
   add_index "subscriptions_payments", ["customer_id"], name: "index_subscriptions_payments_on_customer_id"
   add_index "subscriptions_payments", ["invoice_id"], name: "index_subscriptions_payments_on_invoice_id"
 
