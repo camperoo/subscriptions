@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     subscriptions (0.0.1)
+      activemerchant
       rails (~> 4.0.0)
 
 GEM
@@ -218,7 +219,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activemerchant
   better_errors
   capybara (~> 2.1)
   database_cleaner (< 1.1.0)
