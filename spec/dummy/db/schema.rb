@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130919224252) do
+ActiveRecord::Schema.define(version: 20130919224253) do
 
   create_table "subscriptions_events", force: true do |t|
     t.integer  "payment_id"
@@ -56,8 +56,6 @@ ActiveRecord::Schema.define(version: 20130919224252) do
     t.integer  "customer_id"
     t.integer  "invoice_id"
     t.integer  "amount"
-    t.integer  "gateway_fee"
-    t.decimal  "gateway_fee_percentage"
     t.integer  "merchant_fee"
     t.decimal  "merchant_fee_percentage"
     t.date     "date"
