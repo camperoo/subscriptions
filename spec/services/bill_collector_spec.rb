@@ -1,27 +1,23 @@
 require 'spec_helper'
 
-class FakeInvoice
-  attr_accessor :payments, :state, :user, :amount, :invoice_end_date
-end
-
 describe Subscriptions::BillCollector do
 
   let(:payment_gateway) { double() }
-  let(:payment) { double("Payment") }
-
   let(:credit_card) { double() }
+  let(:payment) { Subscriptions::Payment.new }
+
   let(:user) {
-    user = double()
+    user = double(Subscriptions.customer_class)
     user.stub(:credit_card) { credit_card }
     user
   }
 
   let(:amount) { 12345 }
   let(:pending_invoice) {
-    f_invoice = FakeInvoice.new
+    f_invoice = Subscriptions::Invoice.new
     f_invoice.invoice_end_date = invoice_end_date
-    f_invoice.state= :pending
-    f_invoice.user = user
+    f_invoice.status = :pending
+    f_invoice.stub(:customer) { user }
     f_invoice.amount = amount
     f_invoice.payments = []
     f_invoice
@@ -47,8 +43,8 @@ describe Subscriptions::BillCollector do
 
     context "when payment successful" do
       let(:payment_status) { true }
-      it "state should change complete" do
-        pending_invoice.state.should eq(:complete)
+      it "status should change complete" do
+        pending_invoice.status.should eq(:complete)
       end
       it "payment should be added to invoice" do
         pending_invoice.payments.size.should eq(1)
@@ -57,8 +53,8 @@ describe Subscriptions::BillCollector do
 
     context "when payment unsuccessful" do
       let(:payment_status) { false }
-      it "state should remain as pending" do
-        pending_invoice.state.should eq(:pending)
+      it "status should change to failed" do
+        pending_invoice.status.should eq(:failed)
       end
       it "payment should be added to invoice" do
         pending_invoice.payments.size.should eq(1)
@@ -77,11 +73,11 @@ describe Subscriptions::BillCollector do
       }
 
       it "should add payment" do
-        pending_invoice.payments.count.should eq(1)
+        pending_invoice.payments.size.should eq(1)
       end
 
-      it "should change the state to 'complete' if the balance was settled" do
-        pending_invoice.state.should eq(:complete)
+      it "should change the status to 'complete' if the balance was settled" do
+        pending_invoice.status.should eq(:complete)
       end
     end
 
@@ -93,11 +89,21 @@ describe Subscriptions::BillCollector do
       }
 
       it "should still add a payment if it was unsuccessful" do
-        pending_invoice.payments.count.should eq(1)
+        pending_invoice.payments.size.should eq(1)
       end
 
-      it "should not change the state if the payment was unsuccessful" do
-        pending_invoice.state.should eq(:pending)
+      it "should change the status to failed if the payment was unsuccessful" do
+        pending_invoice.status.should eq(:failed)
+      end
+
+      it "should track the number of retries" do
+        pending_invoice.status.should eq(:failed)
+        pending_invoice.retries.should eq(1)
+
+        payment.should_receive(:is_successful?) { false }
+
+        subject.add_payment(pending_invoice, payment)
+        pending_invoice.retries.should eq(2)
       end
     end
   end

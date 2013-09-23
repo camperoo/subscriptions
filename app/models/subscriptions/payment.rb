@@ -4,7 +4,6 @@ module Subscriptions
     belongs_to :invoice
     has_one :event
 
-
     def self.generate_from_response(gateway_response)
       raw_data = gateway_response["direct_response"]
 
