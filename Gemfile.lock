@@ -3,7 +3,6 @@ PATH
   specs:
     subscriptions (0.0.1)
       activemerchant
-      rails (~> 4.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -226,6 +225,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.2.1)
   jazz_hands
   pry
+  rails (~> 4.0.0)
   rspec-rails (~> 2.0)
   selenium-webdriver (~> 2.35)
   shoulda-matchers

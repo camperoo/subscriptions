@@ -23,5 +23,4 @@ class EventLogger
 
     event
   end
-
 end

@@ -1,11 +1,10 @@
-require 'subscriptions/services/bill_collector'
-require 'pry'
+require 'spec_helper'
 
 class FakeInvoice
   attr_accessor :payments, :state, :user, :amount, :invoice_end_date
 end
 
-describe Subscriptions::Services::BillCollector do
+describe Subscriptions::BillCollector do
 
   let(:payment_gateway) { double() }
   let(:credit_card) { double() }

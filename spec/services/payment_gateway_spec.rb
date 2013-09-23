@@ -1,10 +1,9 @@
-require 'subscriptions/services/payment_gateway.rb'
+require 'spec_helper'
 require 'active_merchant'
-require 'spec_no_rails_helper'
 
 ActiveMerchant::Billing::Base.mode = :test
 
-describe Subscriptions::Services::PaymentGateway do
+describe Subscriptions::PaymentGateway do
 
   describe "authorize_and_capture" do
     GATEWAY_FEE_PERCENTAGE = 0.021

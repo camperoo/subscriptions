@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apitest.authorize.net/xml/v1/request.api
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="utf-8"?>
+        <createCustomerProfileTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+          <merchantAuthentication>
+            <name>SOMETRANSACTIONNAME</name>
+            <transactionKey>SOMETRANSACTIONKEY</transactionKey>
+          </merchantAuthentication>
+          <transaction>
+            <profileTransAuthCapture>
+              <amount>1.23</amount>
+              <customerProfileId>20851995</customerProfileId>
+              <customerPaymentProfileId>19136816</customerPaymentProfileId>
+            </profileTransAuthCapture>
+          </transaction>
+        </createCustomerProfileTransactionRequest>
+    headers:
+      Content-Type:
+      - text/xml
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 23 Sep 2013 16:18:52 GMT
+      Server:
+      - Microsoft-IIS/6.0
+      X-Powered-By:
+      - ASP.NET
+      X-Aspnet-Version:
+      - 2.0.50727
+      Cache-Control:
+      - private
+      Content-Type:
+      - text/xml; charset=utf-8
+      Content-Length:
+      - '536'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48RXJy
+        b3JSZXNwb25zZSB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEv
+        WE1MU2NoZW1hLWluc3RhbmNlIiB4bWxuczp4c2Q9Imh0dHA6Ly93d3cudzMu
+        b3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxucz0iQW5ldEFwaS94bWwvdjEvc2No
+        ZW1hL0FuZXRBcGlTY2hlbWEueHNkIj48bWVzc2FnZXM+PHJlc3VsdENvZGU+
+        RXJyb3I8L3Jlc3VsdENvZGU+PG1lc3NhZ2U+PGNvZGU+RTAwMDAzPC9jb2Rl
+        Pjx0ZXh0PlRoZSAnQW5ldEFwaS94bWwvdjEvc2NoZW1hL0FuZXRBcGlTY2hl
+        bWEueHNkOnRyYW5zYWN0aW9uS2V5JyBlbGVtZW50IGlzIGludmFsaWQgLSBU
+        aGUgdmFsdWUgJ1NPTUVUUkFOU0FDVElPTktFWScgaXMgaW52YWxpZCBhY2Nv
+        cmRpbmcgdG8gaXRzIGRhdGF0eXBlICdTdHJpbmcnIC0gVGhlIGFjdHVhbCBs
+        ZW5ndGggaXMgZ3JlYXRlciB0aGFuIHRoZSBNYXhMZW5ndGggdmFsdWUuPC90
+        ZXh0PjwvbWVzc2FnZT48L21lc3NhZ2VzPjwvRXJyb3JSZXNwb25zZT4=
+    http_version: 
+  recorded_at: Mon, 23 Sep 2013 16:18:51 GMT
+recorded_with: VCR 2.5.0
