@@ -8,7 +8,7 @@ describe Subscriptions::EventLogger do
                                                 customer: customer ) }
 
     it "should create a new event with all data" do
-      generated_event = EventLogger.log_charge(payment, payment.customer.email,
+      generated_event = Subscriptions::EventLogger.log_charge(payment, payment.customer.email,
                                                payment.amount, "some raw data",
                                                "Authorize.net")
 
@@ -23,9 +23,9 @@ describe Subscriptions::EventLogger do
     end
 
     it "should not create the event if the payment already has one associated" do
-      existing_event = FactoryGirl.create(:event, payment: payment)
-      generated_event = EventLogger.log_charge(payment, "customer", 100,
-                                               "data", "source")
+      FactoryGirl.create(:event, payment: payment)
+      generated_event = Subscriptions::EventLogger.log_charge(payment, "customer", 100,
+                                                   "data", "source")
 
       generated_event.should be_nil
     end

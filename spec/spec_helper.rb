@@ -7,7 +7,7 @@ require 'vcr'
 require 'pry'
 
 VCR.configure do |c|
-  c.cassette_library_dir = Rails.root.join("spec", "fixtures", "vcr")
+  c.cassette_library_dir = Rails.root.join("..", "..", "spec", "fixtures", "vcr")
   c.hook_into :webmock # or :fakeweb
 end
 

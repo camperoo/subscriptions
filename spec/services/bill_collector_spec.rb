@@ -26,7 +26,7 @@ describe Subscriptions::BillCollector do
   }
 
   subject {
-    Subscriptions::Services::BillCollector.new(payment_gateway)
+    Subscriptions::BillCollector.new(payment_gateway)
   }
 
   describe ".collect_if_due" do
