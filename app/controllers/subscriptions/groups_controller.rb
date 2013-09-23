@@ -2,7 +2,7 @@ require_dependency "subscriptions/application_controller"
 
 module Subscriptions
   class GroupsController < ApplicationController
-    before_action :set_group, only: [:show, :edit, :update, :destroy]
+    before_filter :set_group, only: [:show, :edit, :update, :destroy]
 
     # GET /groups
     def index

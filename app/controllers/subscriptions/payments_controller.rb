@@ -2,7 +2,7 @@ require_dependency "subscriptions/application_controller"
 
 module Subscriptions
   class PaymentsController < ApplicationController
-    before_action :set_payment, only: [:show, :edit, :update, :destroy]
+    before_filter :set_payment, only: [:show, :edit, :update, :destroy]
 
     # GET /payments
     def index

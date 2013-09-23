@@ -5,7 +5,9 @@ module Subscriptions
       MERCHANT_FEE_PERCENTAGE = 0.0275
 
       def authorize_and_capture(cim_gateway, credit_card, amount)
-        amount = "%.2f" % (amount / 100.0) # This gateway requires formated decimal, not cents
+        # This gateway requires formated decimal, not cents
+        amount = "%.2f" % (amount / 100.0)
+
         transaction = {
           transaction:
           {

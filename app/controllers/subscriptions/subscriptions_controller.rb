@@ -2,7 +2,7 @@ require_dependency "subscriptions/application_controller"
 
 module Subscriptions
   class SubscriptionsController < ApplicationController
-    before_action :set_subscription, only: [:show, :edit, :update, :destroy]
+    before_filter :set_subscription, only: [:show, :edit, :update, :destroy]
 
     # GET /subscriptions
     def index

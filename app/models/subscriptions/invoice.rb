@@ -4,6 +4,5 @@ module Subscriptions
     has_many :payments
 
     scope :due_today, -> { where(invoice_end_date: Date.today) }
-
   end
 end
