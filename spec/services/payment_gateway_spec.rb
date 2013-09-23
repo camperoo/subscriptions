@@ -28,9 +28,11 @@ describe Subscriptions::PaymentGateway do
         @payment_data = subject.authorize_and_capture(credit_card, amount)
       end
 
-      @payment_data["email_address"].should eq("test@test.com")
-      @payment_data["transaction_id"].should eq("2198546730")
-      @payment_data["amount"].should eq("1.23")
+      direct_response = @payment_data["direct_response"]
+
+      direct_response["email_address"].should eq("test@test.com")
+      direct_response["transaction_id"].should eq("2198546730")
+      direct_response["amount"].should eq("1.23")
     end
   end
 

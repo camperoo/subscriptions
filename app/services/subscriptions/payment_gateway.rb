@@ -21,7 +21,7 @@ module Subscriptions
         }
       }
       gateway_result = @cim_gateway.create_customer_profile_transaction(transaction)
-      gateway_result.params["direct_response"]
+      return gateway_result.params
     end
   end
 end

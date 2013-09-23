@@ -7,13 +7,15 @@ end
 describe Subscriptions::BillCollector do
 
   let(:payment_gateway) { double() }
+  let(:payment) { double("Payment") }
+
   let(:credit_card) { double() }
   let(:user) {
     user = double()
     user.stub(:credit_card) { credit_card }
     user
   }
-  let(:payment) { double() }
+
   let(:amount) { 12345 }
   let(:pending_invoice) {
     f_invoice = FakeInvoice.new
@@ -29,48 +31,37 @@ describe Subscriptions::BillCollector do
     Subscriptions::BillCollector.new(payment_gateway)
   }
 
-  describe ".collect_if_due" do
-    context "when due date in the future" do
-      let(:invoice_end_date) { Date.today + 1 }
-      before {
-          subject.collect_if_due pending_invoice
-      }
-      it "payment state shouldn't change from pending" do
-        pending_invoice.state.should eq(:pending)
+  describe ".collect" do
+
+    let(:invoice_end_date) { Date.today }
+
+    before {
+      payment.should_receive(:is_successful?) { payment_status }
+      payment_gateway.should_receive(:authorize_and_capture)
+                     .with(credit_card, amount)
+
+      subject.should_receive(:generate_payment) { payment }
+
+      subject.collect pending_invoice
+    }
+
+    context "when payment successful" do
+      let(:payment_status) { true }
+      it "state should change complete" do
+        pending_invoice.state.should eq(:complete)
       end
-      it "number of payments shouldn't change" do
-        pending_invoice.payments.size.should eq(0)
+      it "payment should be added to invoice" do
+        pending_invoice.payments.size.should eq(1)
       end
     end
 
-    context "when due date is today" do
-      let(:invoice_end_date) { Date.today }
-
-      before {
-        payment.should_receive(:is_successful?) { payment_status }
-        payment_gateway.should_receive(:authorize_and_capture)
-          .with(credit_card, amount) { payment }
-        subject.collect_if_due pending_invoice
-      }
-
-      context "when payment successful" do
-        let(:payment_status) { true }
-        it "state should change complete" do
-          pending_invoice.state.should eq(:complete)
-        end
-        it "payment should be added to invoice" do
-          pending_invoice.payments.size.should eq(1)
-        end
+    context "when payment unsuccessful" do
+      let(:payment_status) { false }
+      it "state should remain as pending" do
+        pending_invoice.state.should eq(:pending)
       end
-
-      context "when payment unsuccessful" do
-        let(:payment_status) { false }
-        it "state should remain as pending" do
-          pending_invoice.state.should eq(:pending)
-        end
-        it "payment should be added to invoice" do
-          pending_invoice.payments.size.should eq(1)
-        end
+      it "payment should be added to invoice" do
+        pending_invoice.payments.size.should eq(1)
       end
     end
   end

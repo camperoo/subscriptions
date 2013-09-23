@@ -6,12 +6,16 @@ module Subscriptions
       @payment_gateway = payment_gateway
     end
 
-    def collect_if_due(invoice)
-      return unless invoice.invoice_end_date == Date.today
+    def collect(invoice)
+      gateway_response = @payment_gateway.authorize_and_capture(invoice.user.credit_card,
+                                                                invoice.amount)
 
-      payment = @payment_gateway.authorize_and_capture(invoice.user.credit_card,
-                                                       invoice.amount)
+      payment = generate_payment(gateway_response)
+
       add_payment(invoice, payment)
+    end
+
+    def create_payment_from_response(gateway_response)
     end
 
     def add_payment(invoice, payment)
@@ -20,5 +24,12 @@ module Subscriptions
       end
       invoice.payments << payment
     end
+
+    private
+
+    def generate_payment(response)
+      Subscriptions::Payment.generate_from_response(response)
+    end
+
   end
 end
