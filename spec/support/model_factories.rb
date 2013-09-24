@@ -20,6 +20,8 @@ FactoryGirl.define do
     customer
     invoice_start_date { Date.today }
     invoice_end_date { Date.today + 1.month }
+    retries 0
+    status :pending
   end
 
   factory :event, class: Subscriptions::Event do
