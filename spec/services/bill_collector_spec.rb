@@ -1,10 +1,30 @@
 require 'spec_helper'
+require 'active_merchant'
+
+ActiveMerchant::Billing::Base.mode = :test
+
+shared_context "vcr_setup" do
+  let(:amount) { 123 }
+  let(:credit_card) {
+    credit_card = double()
+    credit_card.stub(:customer_profile_id) { "20851995" }
+    credit_card.stub(:customer_payment_profile_id) { "19136816" }
+    credit_card
+  }
+
+  let(:login) { "SOMETRANSACTIONNAME" }
+  let(:password) { "SOMETRANSACTIONKEY" }
+  let(:cim_gateway) {
+    ActiveMerchant::Billing::AuthorizeNetCimGateway.new( login: login,
+                                                        password: password )
+  }
+
+  let(:gateway) { Subscriptions::PaymentGateway.new(cim_gateway) }
+end
 
 describe Subscriptions::BillCollector do
 
-  let(:payment_gateway) { double() }
-  let(:credit_card) { double() }
-  let(:payment) { Subscriptions::Payment.new }
+  include_context "vcr_setup"
 
   let(:user) {
     user = double(Subscriptions.customer_class)
@@ -12,7 +32,6 @@ describe Subscriptions::BillCollector do
     user
   }
 
-  let(:amount) { 12345 }
   let(:pending_invoice) {
     f_invoice = Subscriptions::Invoice.new
     f_invoice.invoice_end_date = invoice_end_date
@@ -24,88 +43,68 @@ describe Subscriptions::BillCollector do
   }
 
   subject {
-    Subscriptions::BillCollector.new(payment_gateway)
+    Subscriptions::BillCollector.new(gateway)
   }
 
   describe ".collect" do
-
     let(:invoice_end_date) { Date.today }
 
-    before {
-      payment.should_receive(:is_successful?) { payment_status }
-      payment_gateway.should_receive(:authorize_and_capture)
-                     .with(credit_card, amount)
+    context "when payment is successful" do
+      before {
+        VCR.use_cassette('create_customer_profile_transaction') do
+          subject.collect(pending_invoice)
+        end
+      }
 
-      subject.should_receive(:generate_payment) { payment }
-
-      subject.collect pending_invoice
-    }
-
-    context "when payment successful" do
-      let(:payment_status) { true }
-      it "status should change complete" do
-        pending_invoice.status.should eq(:complete)
-      end
-      it "payment should be added to invoice" do
+      it "should be added to the invoice " do
         pending_invoice.payments.size.should eq(1)
       end
+
+      it "invoice status should be complete" do
+        pending_invoice.status.should eq(:complete)
+      end
+
+      it "should be successful" do
+        payment = pending_invoice.payments.first
+
+        payment.is_successful?.should be_true
+        payment.amount.should eq(1.23)
+      end
+
     end
 
     context "when payment unsuccessful" do
-      let(:payment_status) { false }
-      it "status should change to failed" do
-        pending_invoice.status.should eq(:failed)
-      end
-      it "payment should be added to invoice" do
-        pending_invoice.payments.size.should eq(1)
-      end
-    end
-  end
-
-
-  describe ".add_payment" do
-    let(:invoice_end_date) { Date.today }
-
-    context "successful payment" do
       before {
-        payment.should_receive(:is_successful?) { true }
-        subject.add_payment(pending_invoice, payment)
+        VCR.use_cassette('create_customer_profile_transaction_bad') do
+          subject.collect(pending_invoice)
+        end
       }
 
-      it "should add payment" do
+      it "should be added to the invoice " do
         pending_invoice.payments.size.should eq(1)
       end
 
-      it "should change the status to 'complete' if the balance was settled" do
-        pending_invoice.status.should eq(:complete)
-      end
-    end
-
-    context "unsuccessful payment" do
-
-      before {
-        payment.should_receive(:is_successful?) { false }
-        subject.add_payment(pending_invoice, payment)
-      }
-
-      it "should still add a payment if it was unsuccessful" do
-        pending_invoice.payments.size.should eq(1)
-      end
-
-      it "should change the status to failed if the payment was unsuccessful" do
+      it "invoice status should be failed" do
         pending_invoice.status.should eq(:failed)
+      end
+
+      it "should not be successful" do
+        payment = pending_invoice.payments.first
+
+        payment.is_successful?.should be_false
+        payment.amount.should be_nil
       end
 
       it "should track the number of retries" do
-        pending_invoice.status.should eq(:failed)
         pending_invoice.retries.should eq(1)
 
-        payment.should_receive(:is_successful?) { false }
+        VCR.use_cassette('create_customer_profile_transaction_bad') do
+          subject.collect(pending_invoice)
+        end
 
-        subject.add_payment(pending_invoice, payment)
         pending_invoice.retries.should eq(2)
+        pending_invoice.payments.size.should eq(2)
       end
     end
   end
-
 end

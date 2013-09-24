@@ -31,7 +31,21 @@ module Subscriptions
     private
 
     def generate_payment(response)
-      Subscriptions::Payment.generate_from_response(response)
+      payment = Subscriptions::Payment.new
+      payment.status = response["messages"]["result_code"]
+
+      if payment.is_successful?
+        raw_data = response["direct_response"]
+
+        payment.amount = raw_data["amount"].to_f
+        payment.description = raw_data["message"]
+        payment.customer_id = raw_data["customer_id"]
+      else
+        raw_data = response["messages"]
+        payment.description = raw_data["text"]
+      end
+
+      payment
     end
 
   end
