@@ -7,7 +7,7 @@ module Subscriptions
                            .where("status = ?", :pending)}
 
     scope :to_retry, -> { where("retries > ?",  0)
-                         .where("retries < ?", 4)
+                         .where("retries < ?", 3)
                          .where("status = ?", :failed)}
   end
 end

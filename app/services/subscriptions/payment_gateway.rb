@@ -20,6 +20,7 @@ module Subscriptions
           customer_payment_profile_id: credit_card.customer_payment_profile_id
         }
       }
+
       gateway_result = @cim_gateway.create_customer_profile_transaction(transaction)
       return gateway_result.params
     end
