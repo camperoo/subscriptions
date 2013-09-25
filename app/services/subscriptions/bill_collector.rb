@@ -7,7 +7,9 @@ module Subscriptions
     end
 
     def collect(invoice)
-      gateway_response = @payment_gateway.authorize_and_capture(invoice.customer.credit_card, invoice.amount)
+      gateway_response = @payment_gateway.authorize_and_capture(
+                                            invoice.customer.credit_card,
+                                            invoice.amount)
 
       payment = generate_payment(gateway_response)
 

@@ -4,10 +4,10 @@ module Subscriptions
     has_many :payments
 
     scope :due_today, -> { where(invoice_end_date: Date.today)
-                           .where(status: :pending)}
+                           .where("status = ?", :pending)}
 
     scope :to_retry, -> { where("retries > ?",  0)
                          .where("retries < ?", 4)
-                         .where(status: :failed) }
+                         .where("status = ?", :failed)}
   end
 end
