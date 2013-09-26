@@ -14,7 +14,7 @@ describe Subscriptions::PaymentGateway do
   subject { Subscriptions::PaymentGateway.new(cim_gateway) }
 
   describe "authorize_and_capture" do
-    let(:amount) { 123 }
+    let(:amount) { 1.23 }
 
     let(:invoice) {
       invoice = double()
@@ -24,7 +24,7 @@ describe Subscriptions::PaymentGateway do
       customer.stub(:credit_card) { credit_card }
       invoice
     }
-    
+
     context "with good credit card" do
       let(:credit_card) {
         credit_card = double()

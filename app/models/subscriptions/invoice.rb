@@ -1,6 +1,6 @@
 module Subscriptions
   class Invoice < ActiveRecord::Base
-    
+
     STATUSES = [
       STATUS_PENDING = :pending,
       STATUS_COMPLETE = :complete,
@@ -26,6 +26,7 @@ module Subscriptions
       end
 
       self.payments << payment
+      self.save!
     end
 
   end

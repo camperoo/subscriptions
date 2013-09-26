@@ -17,7 +17,7 @@ describe Subscriptions::EventLogger do
       generated_event.user_identifier.should eq(payment.customer.email)
       generated_event.action.should eq("was charged")
       generated_event.amount.should eq(payment.amount)
-      generated_event.data.should eq("some raw data")
+      generated_event.data.should eq("some raw data".to_json)
       generated_event.event_type.should eq("charge")
       generated_event.source.should eq("Authorize.net")
     end

@@ -10,6 +10,13 @@ module Subscriptions
       return if invoice.retries >= 3
       gateway_response = @payment_gateway.authorize_and_capture(invoice)
       payment = generate_payment(gateway_response)
+
+      status_code = gateway_response["messages"]["message"]
+
+      EventLogger.log_charge(payment, invoice.customer.email, payment.amount,
+                             gateway_response, "AuthorizeNetCimGateway",
+                             status_code["code"],  status_code["text"])
+
       invoice.add_payment(payment)
     end
 
@@ -17,9 +24,9 @@ module Subscriptions
 
     def generate_payment(response)
       payment = Subscriptions::Payment.new
-      
-      if response["messages"]["result_code"] == "Ok" 
-        payment.status = Subscriptions::Payment::STATUS_COMPLETE 
+
+      if response["messages"]["result_code"] == "Ok"
+        payment.status = Subscriptions::Payment::STATUS_COMPLETE
       else
         payment.status = Subscriptions::Payment::STATUS_ERROR
       end
@@ -33,6 +40,8 @@ module Subscriptions
         raw_data = response["messages"]
         payment.description = raw_data["text"]
       end
+
+      payment.save!
 
       payment
     end

@@ -10,8 +10,7 @@ module Subscriptions
     def authorize_and_capture(invoice)
       credit_card = invoice.customer.credit_card
 
-      # This gateway requires formated decimal, not cents
-      amount = "%.2f" % (invoice.amount / 100.0)
+      amount = invoice.amount
 
       transaction = {
         transaction:

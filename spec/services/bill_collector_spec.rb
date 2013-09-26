@@ -29,6 +29,7 @@ describe Subscriptions::BillCollector do
   let(:user) {
     user = double(Subscriptions.customer_class)
     user.stub(:credit_card) { credit_card }
+    user.stub(:email) { "some@email.com" }
     user
   }
 
