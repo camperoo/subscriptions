@@ -48,13 +48,13 @@ has_one :credit_card, class_name: "Subscriptions::CreditCard"
 
 Terminology
 -----------
-- *Adhoc Invoicing* - Charging a user an arbitrary amount of money at some point in the future (as opposed to Subscription Invoicing)
-- *Credit Card* - Holds the Authorize.NET payment profile information (not the actual card number)
-- *Customer Profile ID* - The Authorize.NET ID that represents the customer
-- *Invoice* - Represents who, when, and how much to charge.
-- *Payment Profile ID* - The Authorize.NET ID that represents the credit card information for the customer
-- *Plan* - Defines a recurring payment plan (how much to charge and on what interval)
-- *Subscription Invoicing* - Charging a user based on a specific plan.
+- **Adhoc Invoicing** - Charging a user an arbitrary amount of money at some point in the future (as opposed to Subscription Invoicing)
+- **Credit Card** - Holds the Authorize.NET payment profile information (not the actual card number)
+- **Customer Profile ID** - The Authorize.NET ID that represents the customer
+- **Invoice** - Represents who, when, and how much to charge.
+- **Payment Profile ID** - The Authorize.NET ID that represents the credit card information for the customer
+- **Plan** - Defines a recurring payment plan (how much to charge and on what interval)
+- **Subscription Invoicing** - Charging a user based on a specific plan.
 
 
 Obtaining the Authorize.NET CIM profile information
