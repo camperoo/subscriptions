@@ -7,6 +7,7 @@ module Subscriptions
     end
 
     def collect(invoice)
+      return if invoice.retries >= 3
       gateway_response = @payment_gateway.authorize_and_capture(invoice)
       payment = generate_payment(gateway_response)
       invoice.add_payment(payment)

@@ -105,6 +105,14 @@ describe Subscriptions::BillCollector do
         pending_invoice.retries.should eq(2)
         pending_invoice.payments.size.should eq(2)
       end
+
+      it "should not try collecting the invoice if it has more than 3 retries" do
+        pending_invoice.retries = 3
+
+        subject.collect(pending_invoice)
+
+        pending_invoice.retries.should eq(3)
+      end
     end
   end
 end
