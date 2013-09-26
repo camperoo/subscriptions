@@ -28,7 +28,7 @@ and password.
 Installation
 ------------
 
-Add the following to your Gemfile and run bundle:
+Add the following to your Gemfile and run ```bundle```:
 
 ```gem 'subscriptions'```
 
@@ -39,10 +39,11 @@ rake subscriptions:install:migrations
 rake db:migrate
 ```
 
-Create an initializer in ```config/initializers/subscriptions.rb``` with the following code:
+Create an initializer in ```config/initializers/subscriptions.rb``` with the following code, making sure to replace the
+```"User"``` string with whatever the name of your user class is in your code:
 
 ```
-Subscriptions.customer_class = "User" # where the string represents the name of your User class
+Subscriptions.customer_class = "User" 
 ```
 
 Finally, you'll have to modify your user model and add the following:
