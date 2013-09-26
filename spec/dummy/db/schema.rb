@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130926162916) do
+ActiveRecord::Schema.define(version: 20130926170808) do
 
   create_table "subscriptions_credit_cards", force: true do |t|
     t.integer  "customer_id"
@@ -28,13 +28,13 @@ ActiveRecord::Schema.define(version: 20130926162916) do
     t.string   "user_identifier"
     t.string   "action"
     t.string   "amount"
-    t.string   "data"
     t.string   "event_type"
     t.string   "source"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "code"
     t.string   "code_text"
+    t.text     "data"
   end
 
   create_table "subscriptions_groups", force: true do |t|

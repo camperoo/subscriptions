@@ -8,8 +8,9 @@ describe Subscriptions::EventLogger do
                                                 customer: customer ) }
 
     it "should create a new event with all data" do
+      raw_data = "some_raw_data" * 255
       generated_event = Subscriptions::EventLogger.log_charge(payment, payment.customer.email,
-                                               payment.amount, "some raw data",
+                                               payment.amount, raw_data,
                                                "Authorize.net")
 
       generated_event.persisted?.should be_true
@@ -17,7 +18,7 @@ describe Subscriptions::EventLogger do
       generated_event.user_identifier.should eq(payment.customer.email)
       generated_event.action.should eq("was charged")
       generated_event.amount.should eq(payment.amount)
-      generated_event.data.should eq("some raw data".to_json)
+      generated_event.data.should eq(raw_data.to_json)
       generated_event.event_type.should eq("charge")
       generated_event.source.should eq("Authorize.net")
     end
