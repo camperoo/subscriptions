@@ -2,8 +2,8 @@ module Subscriptions
   class Payment < ActiveRecord::Base
 
     STATUSES = [ 
-      STATUS_COMPLETE = 'complete', 
-      STATUS_ERROR = 'error' 
+      STATUS_COMPLETE = :complete, 
+      STATUS_ERROR = :error 
     ]
 
     # Relationships

@@ -1,5 +1,12 @@
 module Subscriptions
   class Invoice < ActiveRecord::Base
+    
+    STATUSES = [
+      STATUS_PENDING = :pending,
+      STATUS_COMPLETE = :complete,
+      STATUS_FAILED = :failed
+    ]
+
     belongs_to :customer, class_name: Subscriptions.customer_class
     has_many :payments
 
@@ -12,9 +19,9 @@ module Subscriptions
 
     def add_payment(payment)
       if payment.is_successful?
-        self.status = :complete
+        self.status = STATUS_COMPLETE
       else
-        self.status = :failed
+        self.status = STATUS_FAILED
         self.retries += 1
       end
 

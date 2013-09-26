@@ -7,7 +7,7 @@ FactoryGirl.define do
     merchant_fee 10
     merchant_fee_percentage 0.1
     date Date.today
-    status "complete"
+    status Subscriptions::Payment::STATUS_COMPLETE
     description "test payment"
   end
 
@@ -21,7 +21,7 @@ FactoryGirl.define do
     invoice_start_date { Date.today }
     invoice_end_date { Date.today + 1.month }
     retries 0
-    status :pending
+    status Subscriptions::Invoice::STATUS_PENDING
   end
 
   factory :event, class: Subscriptions::Event do
