@@ -7,9 +7,11 @@ module Subscriptions
       @cim_gateway = cim_gateway
     end
 
-    def authorize_and_capture(credit_card, amount)
+    def authorize_and_capture(invoice)
+      credit_card = invoice.customer.credit_card
+
       # This gateway requires formated decimal, not cents
-      amount = "%.2f" % (amount / 100.0)
+      amount = "%.2f" % (invoice.amount / 100.0)
 
       transaction = {
         transaction:

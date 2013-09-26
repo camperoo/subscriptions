@@ -7,36 +7,24 @@ module Subscriptions
     end
 
     def collect(invoice)
-      gateway_response = @payment_gateway.authorize_and_capture(invoice.customer.credit_card, invoice.amount)
-
+      gateway_response = @payment_gateway.authorize_and_capture(invoice)
       payment = generate_payment(gateway_response)
-
-      add_payment(invoice, payment)
-    end
-
-    def create_payment_from_response(gateway_response)
-    end
-
-    def add_payment(invoice, payment)
-      if payment.is_successful?
-        invoice.status = :complete
-      else
-        invoice.status = :failed
-        invoice.retries += 1
-      end
-
-      invoice.payments << payment
+      invoice.add_payment(payment)
     end
 
     private
 
     def generate_payment(response)
       payment = Subscriptions::Payment.new
-      payment.status = response["messages"]["result_code"]
+      
+      if response["messages"]["result_code"] == "Ok" 
+        payment.status = Subscriptions::Payment::STATUS_COMPLETE 
+      else
+        payment.status = Subscriptions::Payment::STATUS_ERROR
+      end
 
       if payment.is_successful?
         raw_data = response["direct_response"]
-
         payment.amount = raw_data["amount"].to_f
         payment.description = raw_data["message"]
         payment.customer_id = raw_data["customer_id"]

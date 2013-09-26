@@ -9,5 +9,17 @@ module Subscriptions
     scope :to_retry, -> { where("retries > ?",  0)
                          .where("retries < ?", 4)
                          .where(status: :failed) }
+
+    def add_payment(payment)
+      if payment.is_successful?
+        self.status = :complete
+      else
+        self.status = :failed
+        self.retries += 1
+      end
+
+      self.payments << payment
+    end
+
   end
 end
