@@ -32,6 +32,13 @@ Add the following to your Gemfile and run bundle:
 
 ```gem 'subscriptions'```
 
+Generate and run the database migrations in your project:
+
+```
+rake subscriptions:install:migrations
+rake db:migrate
+```
+
 Create an initializer in ```config/initializers/subscriptions.rb``` with the following code:
 
 ```
@@ -45,6 +52,8 @@ has_many :invoices, class_name: "Subscriptions::Invoice"
 has_many :payments, class_name: "Subscriptions::Payment"
 has_one :credit_card, class_name: "Subscriptions::CreditCard"
 ```
+
+
 
 Terminology
 -----------
