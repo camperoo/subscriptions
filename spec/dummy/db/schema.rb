@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130926170808) do
+ActiveRecord::Schema.define(version: 20130926223332) do
 
   create_table "subscriptions_credit_cards", force: true do |t|
     t.integer  "customer_id"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20130926170808) do
     t.integer  "retries",            default: 0
     t.decimal  "amount"
     t.string   "status",             default: "pending"
+    t.integer  "tenant_id"
   end
 
   add_index "subscriptions_invoices", ["customer_id"], name: "index_subscriptions_invoices_on_customer_id"

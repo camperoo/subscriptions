@@ -48,5 +48,4 @@ describe Subscriptions::Invoice do
     invoices.should include(invoice_failed_2_retry)
   end
 
-
 end

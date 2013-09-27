@@ -24,6 +24,8 @@ end
 
 group :test do
   gem "vcr" #Records HTTP requests and replays them for tests
+
+  gem "temping" #creates on the fly dummy active record classes
   gem "webmock" #mocks out HTTP requests
   gem 'pry' #debugging into a console
   gem 'capybara', '~> 2.1'
