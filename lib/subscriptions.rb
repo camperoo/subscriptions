@@ -6,4 +6,5 @@ module Subscriptions
   def self.customer_class
     @@customer_class.constantize
   end
+
 end

@@ -27,6 +27,7 @@ group :test do
   gem "webmock" #mocks out HTTP requests
   gem 'pry' #debugging into a console
   gem 'capybara', '~> 2.1'
+  gem 'capybara-webkit'
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'selenium-webdriver', '~> 2.35'
   gem 'database_cleaner', '< 1.1.0'

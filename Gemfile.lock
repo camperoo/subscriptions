@@ -59,6 +59,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (1.0.0)
+      capybara (~> 2.0, >= 2.0.2)
+      json
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.0.9)
@@ -220,6 +223,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   capybara (~> 2.1)
+  capybara-webkit
   database_cleaner (< 1.1.0)
   devise
   factory_girl_rails (~> 4.2.1)
