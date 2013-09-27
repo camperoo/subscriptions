@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Subscriptions::Invoice do
 
+  it { should respond_to(:tenant_id) }
+
   it ".due_today" do
     # invoice_tomorrow
     FactoryGirl.create(:invoice, invoice_end_date: Date.today + 1)

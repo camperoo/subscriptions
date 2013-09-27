@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130926223332) do
+ActiveRecord::Schema.define(version: 20130927201403) do
 
   create_table "subscriptions_credit_cards", force: true do |t|
     t.integer  "customer_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20130926223332) do
     t.string   "customer_payment_profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
 
   add_index "subscriptions_credit_cards", ["customer_id"], name: "index_subscriptions_credit_cards_on_customer_id"
@@ -35,12 +36,14 @@ ActiveRecord::Schema.define(version: 20130926223332) do
     t.string   "code"
     t.string   "code_text"
     t.text     "data"
+    t.integer  "tenant_id"
   end
 
   create_table "subscriptions_groups", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
 
   create_table "subscriptions_invoices", force: true do |t|
@@ -64,6 +67,7 @@ ActiveRecord::Schema.define(version: 20130926223332) do
     t.integer  "invoice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
 
   add_index "subscriptions_line_items", ["invoice_id"], name: "index_subscriptions_line_items_on_invoice_id"
@@ -79,6 +83,7 @@ ActiveRecord::Schema.define(version: 20130926223332) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "amount"
+    t.integer  "tenant_id"
   end
 
   add_index "subscriptions_payments", ["customer_id"], name: "index_subscriptions_payments_on_customer_id"
@@ -94,6 +99,7 @@ ActiveRecord::Schema.define(version: 20130926223332) do
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
 
   add_index "subscriptions_plans", ["group_id"], name: "index_subscriptions_plans_on_group_id"
@@ -104,6 +110,7 @@ ActiveRecord::Schema.define(version: 20130926223332) do
     t.integer  "customer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
 
   add_index "subscriptions_subscriptions", ["customer_id"], name: "index_subscriptions_subscriptions_on_customer_id"

@@ -8,7 +8,7 @@ module Subscriptions
     end
 
     def tenant_id_is_not_set
-      if !tenant_id.blank?
+      if tenant_id.present?
         errors.add(:tenant_id, "should not be set")
       end
     end
