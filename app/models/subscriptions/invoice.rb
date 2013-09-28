@@ -1,8 +1,6 @@
 module Subscriptions
   class Invoice < ActiveRecord::Base
 
-    include Subscriptions::TenantedValidations
-
     STATUSES = [
       STATUS_PENDING = :pending,
       STATUS_COMPLETE = :complete,

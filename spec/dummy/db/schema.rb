@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130927201403) do
+ActiveRecord::Schema.define(version: 20130927234542) do
 
   create_table "subscriptions_credit_cards", force: true do |t|
     t.integer  "customer_id"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 20130927201403) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tenant_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
