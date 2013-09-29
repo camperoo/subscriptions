@@ -7,5 +7,9 @@ module Subscriptions
       @customers = Subscriptions.customer_class.all
     end
 
+    def show
+      @customer = Subscriptions.customer_class.find(params[:id])
+    end
+
   end
 end

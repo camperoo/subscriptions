@@ -67,7 +67,7 @@ Terminology
 - **Subscription Invoicing** - Charging a user based on a specific plan.
 
 
-Obtaining the Authorize.NET CIM profile information
+Obtaining the profile information
 ---------------------------------------------------
 
 In order to process a credit card, you first have to obtain a Customer Profile ID and a Payment Profile ID. You can
@@ -100,6 +100,9 @@ invoice.amount = 99.99
 generate_credit_card_from_source(pay_source)
 invoice.save!
 ```
+
+The saved invoice will then be processed by your background processor 
+based on the frequency you define.
 
 Processing Invoices
 -------------------

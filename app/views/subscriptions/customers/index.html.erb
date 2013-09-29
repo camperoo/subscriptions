@@ -1,5 +1,5 @@
 <ul>
   <% @customers.each do |customer| %>
-    <li><%= customer.email %></li>
+    <li><%= link_to customer.email, customer_path(customer) %></li>
   <% end %>
 </ul>

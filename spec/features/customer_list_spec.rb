@@ -12,8 +12,8 @@ feature 'Customer List' do
       customer1 = FactoryGirl.create(:customer, tenant_id: 1) 
       customer2 = FactoryGirl.create(:customer, tenant_id: 2) 
       visit '/subscriptions/customers'
-      expect(page).to have_content customer1.email
-      expect(page).to_not have_content customer2.email
+      page.should have_link customer1.email
+      page.should_not have_link customer2.email
     end
   end
 
@@ -25,8 +25,8 @@ feature 'Customer List' do
       customer1 = FactoryGirl.create(:customer) 
       customer2 = FactoryGirl.create(:customer) 
       visit '/subscriptions/customers'
-      expect(page).to have_content customer1.email
-      expect(page).to have_content customer2.email
+      page.should have_link customer1.email
+      page.should have_link customer2.email
     end
   end
 end

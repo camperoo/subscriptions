@@ -1,5 +1,3 @@
 Subscriptions::Engine.routes.draw do
-
-  resources :customers, only: [:index]
-
+  resources :customers, only: [:index, :show]
 end
