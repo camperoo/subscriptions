@@ -14,7 +14,10 @@ module Subscriptions
         quantity_string = "every #{interval_quantity}"
       end
 
-      "$#{amount} #{quantity_string} #{interval_units.pluralize(interval_quantity)}"
+      desc = "$#{amount} #{quantity_string} " +
+              "#{interval_units.pluralize(interval_quantity)}"
+
+      return desc
     end
   end
 end
