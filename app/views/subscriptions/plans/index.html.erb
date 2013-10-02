@@ -10,30 +10,20 @@
       <th>Trial period days</th>
       <th>Assigned</th>
       <th>Group</th>
-      <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @plans.each do |plan| %>
       <tr>
-        <td><%= plan.name %></td>
+        <td><%= link_to plan.name, plan %></td>
         <td><%= plan.amount %></td>
         <td><%= plan.interval_quantity %></td>
         <td><%= plan.interval_units %></td>
         <td><%= plan.trial_period_days %></td>
         <td><%= plan.assigned_id %></td>
         <td><%= plan.group %></td>
-        <td><%= link_to 'Show', plan %></td>
-        <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
-        <td><%= link_to 'Destroy', plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Plan', new_plan_path %>
