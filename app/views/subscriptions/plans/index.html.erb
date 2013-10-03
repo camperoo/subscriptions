@@ -1,10 +1,11 @@
 <h1>Listing plans</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Controls</th>
     </tr>
   </thead>
 
@@ -13,8 +14,15 @@
       <tr>
         <td><%= link_to plan.name, plan %></td>
         <td><%= plan.description %></td>
+        <td>
+          <%= link_to "Edit", edit_plan_path(plan), class: "btn-xs btn-primary" %>
+          <%= button_to "delete", plan, :method => :delete %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<hr/ >
+
+<%= link_to "New Plan", new_plan_path, class: "btn-lg btn-primary"%>
