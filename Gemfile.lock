@@ -3,6 +3,8 @@ PATH
   specs:
     subscriptions (0.0.1)
       activemerchant
+      jquery-rails
+      jquery-ui-rails
 
 GEM
   remote: https://rubygems.org/
@@ -16,7 +18,7 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    active_utils (2.0.0)
+    active_utils (2.0.1)
       activesupport (>= 2.3.11)
       i18n
     activemerchant (1.38.1)
@@ -112,7 +114,14 @@ GEM
       pry-remote (>= 0.1.7)
       pry-stack_explorer (~> 0.4.9)
       railties (>= 3.0, < 5.0)
+    jquery-rails (3.0.4)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.5)
+      railties (>= 3.1.0)
     json (1.8.0)
+    launchy (2.3.0)
+      addressable (~> 2.3)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -232,6 +241,9 @@ DEPENDENCIES
   devise
   factory_girl_rails (~> 4.2.1)
   jazz_hands
+  jquery-rails
+  jquery-ui-rails
+  launchy
   pry
   rails (~> 4.0.0)
   rspec-rails (~> 2.0)

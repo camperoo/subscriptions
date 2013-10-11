@@ -9,5 +9,6 @@ class User < ActiveRecord::Base
   has_many :invoices, class_name: "Subscriptions::Invoice"
   has_many :payments, class_name: "Subscriptions::Payment"
   has_one :credit_card, class_name: "Subscriptions::CreditCard"
+  accepts_nested_attributes_for :credit_card
 
 end

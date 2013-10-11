@@ -14,6 +14,8 @@ gemspec
 # gem 'debugger'
 
 gem 'devise'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
@@ -24,7 +26,7 @@ end
 
 group :test do
   gem "vcr" #Records HTTP requests and replays them for tests
-
+  gem "launchy"
   gem "temping" #creates on the fly dummy active record classes
   gem "webmock" #mocks out HTTP requests
   gem 'pry' #debugging into a console

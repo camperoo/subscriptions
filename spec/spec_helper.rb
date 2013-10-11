@@ -7,9 +7,13 @@ require 'capybara/rspec'
 require 'vcr'
 require 'pry'
 
+#Capybara.javascript_driver = :webkit
+#Capybara.javascript_driver = :selenium
+
 VCR.configure do |c|
   c.cassette_library_dir = Rails.root.join("..", "..", "spec", "fixtures", "vcr")
   c.hook_into :webmock # or :fakeweb
+  c.ignore_localhost = true
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -37,7 +41,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -52,11 +56,17 @@ RSpec.configure do |config|
 
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do
+    if example.metadata[:js]
+      DatabaseCleaner.strategy = :truncation
+      Capybara.server_port = 3333
+    else
+      DatabaseCleaner.strategy = :transaction
+    end
+
     DatabaseCleaner.start
   end
 

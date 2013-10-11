@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
   s.test_files = `git ls-files -- spec/* spec_no_rails/*`.split("\n")
 
   s.add_dependency "activemerchant"
+  s.add_dependency "jquery-rails"
+  s.add_dependency "jquery-ui-rails"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rails", "~> 4.0.0"
