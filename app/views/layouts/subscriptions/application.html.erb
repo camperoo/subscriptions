@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Subscriptions</title>
-  <%= stylesheet_link_tag    "subscriptions/application", media: "all" %>
-  <%= javascript_include_tag "subscriptions/application" %>
-  <%= csrf_meta_tags %>
-</head>
+  <head>
+    <title>Subscriptions</title>
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <%= stylesheet_link_tag    "subscriptions/application", media: "all" %>
+    <%= javascript_include_tag "subscriptions/application" %>
+    <%= csrf_meta_tags %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+          <script src="../../assets/js/html5shiv.js"></script>
+          <script src="../../assets/js/respond.min.js"></script>
+        <![endif]-->
+  </head>
 <body>
 
-<%= yield %>
+<div id="wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="bd-sidebar" role="complementary">
+          <ul class="nav nav-pills nav-stacked">
+            <li><%= link_to "Home", root_path %></li>
+            <li><%= link_to "Users", customers_path %></li>
+            <li><%= link_to "Plans", plans_path %></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9" role="main">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

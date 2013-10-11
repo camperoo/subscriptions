@@ -34,4 +34,12 @@ FactoryGirl.define do
     source "some source"
   end
 
+  factory :plan, class: Subscriptions::Plan do
+    name "plan name"
+    amount 123.45
+    interval_quantity 1
+    interval_units "days"
+    trial_period_days 0
+  end
+
 end
