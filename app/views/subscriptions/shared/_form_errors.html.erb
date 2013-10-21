@@ -1,0 +1,9 @@
+<div id="error_explanation">
+  <h4><%= pluralize(subject.errors.count, "error") %> on the form:</h4>
+
+  <ul>
+    <% subject.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>

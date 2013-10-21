@@ -1,10 +1,19 @@
 module Subscriptions
   class Plan < ActiveRecord::Base
+
+    INTERVAL_UNITS = [
+      WEEK = :week,
+      MONTH = :month,
+      YEAR = :year
+    ]
+
     belongs_to :group
 
     validates :interval_units, :interval_quantity, :name, :amount, presence: true
     validates :amount, numericality: true
 
+    validates_inclusion_of :interval_units, in: INTERVAL_UNITS,
+                           :message => "{{value}} must be one of: #{INTERVAL_UNITS.join ', '}"
 
     def description
       quantity_string = ""
@@ -15,7 +24,7 @@ module Subscriptions
       end
 
       desc = "$#{amount} #{quantity_string} " +
-              "#{interval_units.pluralize(interval_quantity)}"
+              "#{interval_units.to_s.pluralize(interval_quantity)}"
 
       return desc
     end

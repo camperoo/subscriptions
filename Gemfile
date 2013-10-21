@@ -16,6 +16,7 @@ gemspec
 gem 'devise'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'sass-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'

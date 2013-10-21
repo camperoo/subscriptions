@@ -1,45 +1,41 @@
-<%= form_for(@plan) do |f| %>
+<%= form_for @plan, html: { class: "form-horizontal" } do |f| %>
   <% if @plan.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@plan.errors.count, "error") %> prohibited this plan from being saved:</h2>
-
-      <ul>
-      <% @plan.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+    <%= render "subscriptions/shared/form_errors", { subject: @plan } %>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="form-group">
+    <%= f.label :name, class: "col-lg-4 control-label" %>
+    <div class="col-lg-8">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.text_field :amount %>
+  <div class="form-group">
+    <%= f.label :amount, class: "col-lg-4 control-label" %>
+    <div class="col-lg-8">
+      <%= f.text_field :amount, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :interval_quantity %><br>
-    <%= f.number_field :interval_quantity %>
+  <div class="form-group">
+    <%= f.label :interval_quantity, class: "col-lg-4 control-label" %>
+    <div class="col-lg-8">
+      <%= f.number_field :interval_quantity, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :interval_units %><br>
-    <%= f.text_field :interval_units %>
+  <div class="form-group">
+    <%= f.label :interval_units, class: "col-lg-4 control-label" %>
+    <div class="col-lg-8">
+      <%= f.select :interval_units, Subscriptions::Plan::INTERVAL_UNITS, { }, { class: "form-control" } %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :trial_period_days %><br>
-    <%= f.number_field :trial_period_days %>
+  <div class="form-group">
+    <%= f.label :trial_period_days, class: "col-lg-4 control-label" %>
+    <div class="col-lg-8">
+      <%= f.number_field :trial_period_days, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :assigned_id %><br>
-    <%= f.number_field :assigned_id %>
-  </div>
-  <div class="field">
-    <%= f.label :group %><br>
-    <%= f.text_field :group %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <div class="col-lg-offset-4 col-lg-8">
+      <%= f.submit class: "btn btn-default"  %>
+    </div>
   </div>
 <% end %>
