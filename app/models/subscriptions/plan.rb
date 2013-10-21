@@ -2,9 +2,9 @@ module Subscriptions
   class Plan < ActiveRecord::Base
 
     INTERVAL_UNITS = [
-      WEEK = :week,
-      MONTH = :month,
-      YEAR = :year
+      WEEK = "week",
+      MONTH = "month",
+      YEAR = "year"
     ]
 
     belongs_to :group
@@ -24,7 +24,7 @@ module Subscriptions
       end
 
       desc = "$#{amount} #{quantity_string} " +
-              "#{interval_units.to_s.pluralize(interval_quantity)}"
+              "#{interval_units.pluralize(interval_quantity)}"
 
       return desc
     end

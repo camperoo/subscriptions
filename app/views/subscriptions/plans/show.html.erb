@@ -1,24 +1,20 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <%= notice %>
+  </div>
+<% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @plan.name %>
-</p>
+<div class='page-header'>
+  <h1>
+    <%= @plan.name %>
+  </h1>
+</div>
 
-<p>
-  <strong>Amount:</strong>
-  <%= @plan.amount %>
-</p>
 
-<p>
-  <strong>Interval quantity:</strong>
-  <%= @plan.interval_quantity %>
-</p>
-
-<p>
-  <strong>Interval units:</strong>
-  <%= @plan.interval_units %>
-</p>
+<h3>
+  <%= @plan.description %>
+</h3>
 
 <p>
   <strong>Trial period days:</strong>
@@ -35,4 +31,7 @@
   <%= @plan.group %>
 </p>
 
-<%= link_to 'Back', plans_path %>
+<%= link_to 'Back', plans_path, class: "btn btn-warning left" %>
+<%= link_to "Edit", edit_plan_path(@plan), class: "btn btn-primary left" %>
+<%= button_to "delete", @plan, :method => :delete, confirm: 'Are you sure?', class: "btn-xs btn-danger" %>
+
