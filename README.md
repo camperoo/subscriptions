@@ -43,7 +43,11 @@ Create an initializer in ```config/initializers/subscriptions.rb``` with the fol
 ```"User"``` string with whatever the name of your user class is in your code:
 
 ```
-Subscriptions.customer_class = "User" 
+Subscriptions.setup do |config|
+  config.customer_class = "User" 
+  config.tenanting_enabled = true # if you need tenanting
+  config.current_tenant = lambda { Tenant.current.id } # replace with your own method
+end
 ```
 
 Finally, you'll have to modify your user model and add the following:
