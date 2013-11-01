@@ -1,6 +1,8 @@
 subscriptions
 =============
 
+[![Build Status](https://travis-ci.org/camperoo/subscriptions.png)](https://travis-ci.org/camperoo/subscriptions)
+
 Subscriptions is a subscription-billing engine for Ruby on Rails. Think Chargify or Stripe, but as a mountable engine where:
 
 1. you provide your own payment provider
