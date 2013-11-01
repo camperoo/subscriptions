@@ -74,4 +74,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.filter_run_excluding :broken_in_travis => true
+
 end
