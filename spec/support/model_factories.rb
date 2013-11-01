@@ -38,7 +38,7 @@ FactoryGirl.define do
     name "plan name"
     amount 123.45
     interval_quantity 1
-    interval_units :month
+    interval_units "month"
     trial_period_days 0
   end
 

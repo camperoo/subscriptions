@@ -33,5 +33,8 @@
 
 <%= link_to 'Back', plans_path, class: "btn btn-warning left" %>
 <%= link_to "Edit", edit_plan_path(@plan), class: "btn btn-primary left" %>
-<%= button_to "delete", @plan, :method => :delete, confirm: 'Are you sure?', class: "btn-xs btn-danger" %>
+
+<%= button_to "delete", @plan, method: :delete,
+                                data: { confirm: 'Are you sure?' },
+                                class: "btn-xs btn-danger" %>
 

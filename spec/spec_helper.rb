@@ -62,11 +62,10 @@ RSpec.configure do |config|
 
   config.before(:each) do
     if example.metadata[:js]
-      DatabaseCleaner.strategy = :truncation
       Capybara.server_port = 3333
-    else
-      DatabaseCleaner.strategy = :transaction
     end
+
+    DatabaseCleaner.strategy = :truncation
 
     DatabaseCleaner.start
   end

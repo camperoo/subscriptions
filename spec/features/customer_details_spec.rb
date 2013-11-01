@@ -9,12 +9,12 @@ feature 'Customer Details' do
       Subscriptions.stub(:current_tenant).and_return( Proc.new { |request, params| 1 } )
     }
     scenario "can see details of customer in current tenant" do
-      customer = FactoryGirl.create(:customer, tenant_id: 1) 
+      customer = FactoryGirl.create(:customer, tenant_id: 1)
       visit subscriptions.customer_path(customer)
       page.should have_content customer.email
     end
     scenario "cannot see details of customer not in current tenant" do
-      customer = FactoryGirl.create(:customer, tenant_id: 2) 
+      customer = FactoryGirl.create(:customer, tenant_id: 2)
       visit subscriptions.customer_path(customer)
       page.should_not have_content customer.email
     end
@@ -27,13 +27,13 @@ feature 'Customer Details' do
     }
 
     scenario "can see details of customer" do
-      customer = FactoryGirl.create(:customer) 
+      customer = FactoryGirl.create(:customer)
       visit subscriptions.customer_path(customer)
       page.should have_content customer.email
     end
 
     scenario "credit card shows up in modal dialog", js: true do
-      customer = FactoryGirl.create(:customer) 
+      customer = FactoryGirl.create(:customer)
       visit subscriptions.customer_path(customer)
       click_link "Setup Credit Card"
 
@@ -42,7 +42,7 @@ feature 'Customer Details' do
       end
     end
 
-    scenario "when credit card already registered, no setup link appears" 
+    scenario "when credit card already registered, no setup link appears"
 
   end
 

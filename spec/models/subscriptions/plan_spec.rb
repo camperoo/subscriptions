@@ -16,14 +16,14 @@ describe Subscriptions::Plan do
   describe ".description" do
     it "should show the correct description for one interval" do
       plan  = FactoryGirl.create(:plan, amount: 100, interval_quantity: 1,
-                                             interval_units: :month)
+                                             interval_units: "month")
 
       plan.description.should eq("$100.0 / month")
     end
 
     it "should show the correct description for one interval" do
       plan  = FactoryGirl.create(:plan, amount: 100, interval_quantity: 2,
-                                             interval_units: :month)
+                                             interval_units: "month")
 
       plan.description.should eq("$100.0 every 2 months")
     end

@@ -11,7 +11,7 @@ end
 describe Subscriptions::TenantedModel do
 
   let(:tenanted_model) { DummyClass.new }
-  
+
   context "tenanting is enabled" do
 
     before {
